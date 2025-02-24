@@ -32,6 +32,21 @@ public interface BankAccount {
      *
      * @param userID the id of the user that wants do the withdrawal
      * @param amount the amount of the withdrawal
+     *
+     * @return  true if withdraw has success
+     *          false otherwise
      */
-    void withdraw(int userID, double amount);
+    boolean withdraw(int userID, double amount);
+
+    /**
+     * Allows the withdrawal of an amount from the account with a FEE, if the given userID corresponds to the register holder ID
+     * of the bank account. This ID acts like an "identification token" .
+     *
+     * @param userID the id of the user that wants do the withdrawal
+     * @param amount the amount of the withdrawal
+     *
+     * @return  true if withdraw has success
+     *          false otherwise
+     */
+    boolean withdrawWithFee(int userID, double amount);
 }
