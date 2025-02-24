@@ -64,7 +64,7 @@ class SimpleBankAccountTest {
     @Test
     void testWithdrawWithFee() {
         bankAccount.deposit(accountHolder.getId(), TEST_FIRST_AMOUNT);
-        assertTrue(bankAccount.withdrawWithFee(accountHolder.getId(), TEST_THIRD_AMOUNT));
+        bankAccount.withdrawWithFee(accountHolder.getId(), TEST_THIRD_AMOUNT);
         assertEquals(TEST_AMOUNT_WITH_FEE, bankAccount.getBalance());
     }
 
@@ -72,6 +72,30 @@ class SimpleBankAccountTest {
     void testWrongWithdrawWithFee() {
         bankAccount.deposit(accountHolder.getId(), TEST_FIRST_AMOUNT);
         bankAccount.withdrawWithFee(ACCOUNT_TEST_USERID, TEST_THIRD_AMOUNT);
-        assertEquals(TEST_FIRST_AMOUNT, bankAccount.getBalance());
+    }
+
+    @Test
+    void TestWithdrawAllowed() {
+        bankAccount.deposit(accountHolder.getId(), TEST_FIRST_AMOUNT);
+        assertTrue(bankAccount.withdraw(accountHolder.getId(), TEST_SECOND_AMOUNT));
+    }
+
+    @Test
+    void TestWithdrawNotAllowed() {
+        bankAccount.deposit(accountHolder.getId(), TEST_SECOND_AMOUNT);
+        assertFalse(bankAccount.withdraw(accountHolder.getId(), TEST_FIRST_AMOUNT));
+    }
+
+
+    @Test
+    void TestWithdrawWithFeeAllowed() {
+        bankAccount.deposit(accountHolder.getId(), TEST_FIRST_AMOUNT);
+        assertTrue(bankAccount.withdrawWithFee(accountHolder.getId(), TEST_SECOND_AMOUNT));
+    }
+
+    @Test
+    void TestWithdrawWithFeeNotAllowed() {
+        bankAccount.deposit(accountHolder.getId(), TEST_SECOND_AMOUNT);
+        assertFalse(bankAccount.withdrawWithFee(accountHolder.getId(), TEST_FIRST_AMOUNT));
     }
 }
